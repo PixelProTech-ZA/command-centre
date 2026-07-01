@@ -11,14 +11,14 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --pp:#7b2fff;--tl:#00d4aa;--gd:#c9a84c;--rd:#cc0000;
-  --bg:#040406;--bg2:#-bg3:#111118;
+  --bg:#040406;--bg2:#0a0a10;--bg3:#111118;
   --br:#ffffff08;--br2:#ffffff14;--br3:#ffffff22;
   --tx:#f0eeff;--tx2:#9988cc;--tx3:#554477;
 }
 html,body{min-height:100vh;background:var(--bg);font-family:'Syne',sans-serif;color:var(--tx)}
 body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;overflow-x:hidden}
 
-.noise{position:fixed;inset:0;opacity:0.03;background-image:url("data:0a0a10;-image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.noise{position:fixed;inset:0;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
 .grid-bg{position:fixed;inset:0;background-image:linear-gradient(var(--br) 1px,transparent 1px),linear-gradient(90deg,var(--br) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
 .glow-pp{position:fixed;top:-150px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,#7b2fff1a 0%,transparent 65%);pointer-events:none;z-index:0}
 .glow-tl{position:fixed;bottom:-120px;right:-80px;width:450px;height:450px;background:radial-gradient(circle,#00d4aa12 0%,transparent 65%);pointer-events:none;z-index:0}
@@ -116,7 +116,7 @@ body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;over
 .card:nth-child(1){animation-delay:0.04s}.card:nth-child(2){animation-delay:0.08s}.card:nth-child(3){animation-delay:0.12s}
 .card:nth-child(4){animation-delay:0.16s}.card:nth-child(5){animation-delay:0.20s}.card:nth-child(6){animation-delay:0.24s}
 .card:nth-child(7){animation-delay:0.28s}.card:nth-child(8){animation-delay:0.32s}.card:nth-child(9){animation-delay:0.36s}
-.card:nth-child(10){animation-delay:0.40s}
+.card:nth-child(10){animation-delay:0.40s}.card:nth-child(11){animation-delay:0.44s}
 
 @media(max-width:600px){
   .topbar{flex-direction:column}.status-panel{align-items:flex-start}
@@ -141,7 +141,7 @@ body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;over
     <div class="id-tagline">IT specialist, music producer, mixing & mastering engineer, and multi-venture founder. Building future tools for youth and upcoming creators worldwide — from South Africa, for the world.</div>
   </div>
   <div class="status-panel">
-    <div class="status-pill"><span class="dot"></span><span class="status-text">24 tools live</span></div>
+    <div class="status-pill"><span class="dot"></span><span class="status-text">25 tools live</span></div>
     <div class="status-pill"><span class="dot rd"></span><span class="status-text">3 companies active</span></div>
     <div class="count-badge">BUILD · DEPLOY · REPEAT</div>
   </div>
@@ -267,6 +267,13 @@ body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;over
     <div class="new-badge">NEW</div>
     <p class="card-name">PixelView Pro</p>
     <p class="card-desc">Image viewer · desktop app</p>
+    <span class="card-tag t-app">app</span>
+  </a>
+  <a class="card tl-h" href="https://pixelprotech-za.github.io/PixelProTech-Solutions-Smart-Storage-Management-Mobile-Maintenance/" target="_blank">
+    <i class="ti ti-server-2 card-ico ico-tl" aria-hidden="true"></i>
+    <div class="new-badge">NEW</div>
+    <p class="card-name">Smart Storage & Mobile Maintenance</p>
+    <p class="card-desc">Storage management & device upkeep</p>
     <span class="card-tag t-app">app</span>
   </a>
 </div>
