@@ -7,6 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+<!-- PWA: manifest + theme + icons -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#040406">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -405,6 +412,15 @@ function copyCode(){
     btn.classList.add('copied');
     lbl.textContent = 'Copied!';
     setTimeout(()=>{ btn.classList.remove('copied'); lbl.textContent = 'Copy Full Script'; }, 2200);
+  });
+}
+
+// PWA: register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('Service worker registered:', reg.scope))
+      .catch(err => console.log('Service worker registration failed:', err));
   });
 }
 </script>
