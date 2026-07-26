@@ -31,6 +31,18 @@ body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;over
 .glow-tl{position:fixed;bottom:-120px;right:-80px;width:450px;height:450px;background:radial-gradient(circle,#00d4aa12 0%,transparent 65%);pointer-events:none;z-index:0}
 .inner{position:relative;z-index:1}
 
+/* RADAR SWEEP — command-centre signature element */
+.radar-sweep{position:fixed;top:-320px;right:-280px;width:640px;height:640px;pointer-events:none;z-index:0;opacity:0.5}
+.radar-sweep::before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg,#7b2fff22 12deg,transparent 60deg,transparent 360deg);animation:sweep 6s linear infinite}
+.radar-sweep::after{content:'';position:absolute;inset:0;border-radius:50%;border:0.5px solid #ffffff08}
+@keyframes sweep{to{transform:rotate(360deg)}}
+.radar-ring{position:absolute;border-radius:50%;border:0.5px solid #ffffff0a}
+.radar-r1{inset:80px}.radar-r2{inset:180px}.radar-r3{inset:280px}
+
+/* LIVE CLOCK */
+.live-clock{font-family:'Space Mono',monospace;font-size:9px;color:var(--tx3);letter-spacing:0.1em;display:flex;align-items:center;gap:5px}
+.live-clock .lc-dot{width:4px;height:4px;border-radius:50%;background:var(--tl);animation:blink 2.2s infinite}
+
 /* HEADER */
 .topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:30px;flex-wrap:wrap}
 .id-eyebrow{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.28em;color:var(--tx3);text-transform:uppercase;margin-bottom:8px}
@@ -78,11 +90,13 @@ body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;over
 .card.tl-h:hover{border-color:#00d4aa44}
 .card.gd-h:hover{border-color:#c9a84c55}
 .card.rd-h:hover{border-color:#cc000044}
-.card-ico{font-size:20px;margin-bottom:10px;display:block}
-.ico-pp{color:var(--pp)}
-.ico-tl{color:var(--tl)}
-.ico-gd{color:var(--gd)}
-.ico-rd{color:#e74c3c}
+.card-ico{font-size:16px;margin-bottom:12px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:var(--bg3)}
+.ico-pp{color:var(--pp);background:#7b2fff16;box-shadow:inset 0 0 0 0.5px #7b2fff33}
+.ico-tl{color:var(--tl);background:#00d4aa16;box-shadow:inset 0 0 0 0.5px #00d4aa33}
+.ico-gd{color:var(--gd);background:#c9a84c16;box-shadow:inset 0 0 0 0.5px #c9a84c33}
+.ico-rd{color:#e74c3c;background:#cc000016;box-shadow:inset 0 0 0 0.5px #cc000033}
+.card:hover .card-ico{transform:scale(1.08)}
+.card-ico{transition:transform 0.18s}
 .card-name{font-size:13px;font-weight:600;color:var(--tx);margin:0 0 4px;line-height:1.3}
 .card-desc{font-family:'Space Mono',monospace;font-size:9px;color:var(--tx3);line-height:1.65;margin:0}
 .card-tag{display:inline-flex;align-items:center;gap:5px;font-family:'Space Mono',monospace;font-size:8px;padding:2px 7px;border-radius:4px;margin-top:9px;letter-spacing:0.06em}
@@ -137,6 +151,11 @@ body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;over
 <div class="grid-bg"></div>
 <div class="glow-pp"></div>
 <div class="glow-tl"></div>
+<div class="radar-sweep">
+  <div class="radar-ring radar-r1"></div>
+  <div class="radar-ring radar-r2"></div>
+  <div class="radar-ring radar-r3"></div>
+</div>
 <div class="inner">
 
 <!-- HEADER -->
@@ -148,9 +167,10 @@ body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;over
     <div class="id-tagline">IT specialist, music producer, mixing & mastering engineer, and multi-venture founder. Building future tools for youth and upcoming creators worldwide — from South Africa, for the world.</div>
   </div>
   <div class="status-panel">
-    <div class="status-pill"><span class="dot"></span><span class="status-text">27 tools live</span></div>
+    <div class="status-pill"><span class="dot"></span><span class="status-text" id="toolCount">28 tools live</span></div>
     <div class="status-pill"><span class="dot rd"></span><span class="status-text">3 companies active</span></div>
     <div class="count-badge">BUILD · DEPLOY · REPEAT</div>
+    <div class="live-clock"><span class="lc-dot"></span><span id="liveClock">--:--:-- UTC</span></div>
   </div>
 </div>
 
@@ -372,6 +392,13 @@ body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;over
     <p class="card-desc">Advanced audio surgery suite</p>
     <span class="card-tag t-audio">audio</span>
   </a>
+  <a class="card gd-h" href="https://audiohospital.github.io/Every-city-has-a-heartbeat./" target="_blank">
+    <i class="ti ti-world card-ico ico-gd" aria-hidden="true"></i>
+    <div class="new-badge">NEW</div>
+    <p class="card-name">Frequency Oasis // World Signal</p>
+    <p class="card-desc">Live global radio, plotted on a spinning globe</p>
+    <span class="card-tag t-audio">audio</span>
+  </a>
   <a class="card rd-h" href="https://audiohospital.github.io/audio-hospital/" target="_blank">
     <i class="ti ti-heartbeat card-ico ico-rd" aria-hidden="true"></i>
     <div class="arrow"><i class="ti ti-external-link" aria-hidden="true"></i></div>
@@ -412,7 +439,7 @@ body{padding:24px 20px 40px;max-width:960px;margin:0 auto;position:relative;over
 </div>
 <div class="mission-strip">
   built for the <span class="hi">youth</span> · the upcoming creators · the ones who figure it out themselves<br>
-  <span class="hi2">frequency oasis · audio hospital · pixelprotech solutions</span> · 27 tools active · more incoming
+  <span class="hi2">frequency oasis · audio hospital · pixelprotech solutions</span> · 28 tools active · more incoming
 </div>
 
 <!-- COPY BUTTON -->
@@ -435,6 +462,19 @@ function copyCode(){
     setTimeout(()=>{ btn.classList.remove('copied'); lbl.textContent = 'Copy Full Script'; }, 2200);
   });
 }
+
+// LIVE UTC CLOCK — command-centre telemetry readout
+function tickClock(){
+  const el = document.getElementById('liveClock');
+  if(!el) return;
+  const now = new Date();
+  const hh = String(now.getUTCHours()).padStart(2,'0');
+  const mm = String(now.getUTCMinutes()).padStart(2,'0');
+  const ss = String(now.getUTCSeconds()).padStart(2,'0');
+  el.textContent = `${hh}:${mm}:${ss} UTC`;
+}
+tickClock();
+setInterval(tickClock, 1000);
 
 // PWA: register service worker
 if ('serviceWorker' in navigator) {
