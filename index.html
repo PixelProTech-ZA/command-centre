@@ -75,6 +75,19 @@ body{
 .hdr-title{font-family:var(--disp); font-weight:700; font-size:15px; letter-spacing:.14em}
 .hdr-sub{font-family:var(--mono); font-size:9.5px; letter-spacing:.24em; color:var(--tx3); margin-top:2px}
 .hdr-mods{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.qnav{
+  position:sticky; top:0; z-index:50; display:flex; gap:8px; flex-wrap:wrap;
+  padding:10px 14px; margin:0 0 22px; border-radius:12px;
+  background:rgba(7,7,10,0.72); border:1px solid var(--br); backdrop-filter:blur(18px);
+}
+.qnav a{
+  display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:8px;
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.14em; color:var(--tx2);
+  text-decoration:none; border:1px solid transparent; transition:color .15s,border-color .15s,background .15s;
+}
+.qnav a:hover{color:var(--tl); border-color:rgba(0,212,170,.3); background:var(--tl-a)}
+.qnav a i{font-size:12px}
+@media(max-width:640px){.qnav{overflow-x:auto; flex-wrap:nowrap; -webkit-overflow-scrolling:touch} .qnav a{flex:none}}
 .hmod{
   display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:10px;
   background:var(--glass); border:1px solid var(--br); backdrop-filter:blur(14px);
@@ -233,6 +246,15 @@ body{
       <div class="hmod brand-mod">BUILD · DEPLOY · REPEAT</div>
     </div>
   </header>
+
+  <!-- QUICK NAV -->
+  <nav class="qnav" aria-label="Section navigation">
+    <a href="#sec-deployments"><i class="ti ti-bolt" aria-hidden="true"></i>Featured</a>
+    <a href="#sec-webapps"><i class="ti ti-world" aria-hidden="true"></i>Web Apps</a>
+    <a href="#sec-standalone"><i class="ti ti-apps" aria-hidden="true"></i>Standalone</a>
+    <a href="#sec-audiotools"><i class="ti ti-waveform" aria-hidden="true"></i>Audio Tools</a>
+    <a href="#sec-entity"><i class="ti ti-building" aria-hidden="true"></i>Entity</a>
+  </nav>
 
   <main>
 
@@ -412,7 +434,6 @@ body{
       <a class="card" href="https://audiohospital.github.io/Audio-Hospital-Organic-Sound-Treatment-Facility/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-leaf card-ico ico-gd" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">Organic Sound Treatment Facility</p>
         <p class="card-desc">Natural, organic-toned audio treatment &amp; healing space.</p>
         <span class="card-tag t-audio">audio</span>
@@ -420,7 +441,6 @@ body{
       <a class="card" href="https://pixelprotech-za.github.io/Pixel-Link/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-link card-ico ico-tl" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">Pixel Link</p>
         <p class="card-desc">Private cross-device communication platform.</p>
         <span class="card-tag t-web"><i class="ti ti-world" aria-hidden="true"></i> web</span>
@@ -428,31 +448,9 @@ body{
       <a class="card" href="https://pixelprotech-za.github.io/Onyx/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-diamond card-ico ico-pp" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">Onyx</p>
         <p class="card-desc">Encrypted vault and digital workspace.</p>
         <span class="card-tag t-app">app</span>
-      </a>
-      <a class="card" href="https://pixelprotech-za.github.io/Technician-Sign-In/" target="_blank">
-        <span class="led"></span><span class="port"></span>
-        <i class="ti ti-user-check card-ico ico-tl" aria-hidden="true"></i>
-        <p class="card-name">Technician Sign-In</p>
-        <p class="card-desc">Secure technician authentication system.</p>
-        <span class="card-tag t-web"><i class="ti ti-world" aria-hidden="true"></i> web</span>
-      </a>
-      <a class="card" href="https://audiohospital.github.io/Certified-Engine/" target="_blank">
-        <span class="led"></span><span class="port"></span>
-        <i class="ti ti-certificate card-ico ico-gd" aria-hidden="true"></i>
-        <p class="card-name">Certified Engine</p>
-        <p class="card-desc">Certification platform for engineers &amp; technicians.</p>
-        <span class="card-tag t-audio">audio</span>
-      </a>
-      <a class="card" href="https://audiohospital.github.io/The-Sound-Design-Lab/#home" target="_blank">
-        <span class="led"></span><span class="port"></span>
-        <i class="ti ti-waveform card-ico ico-gd" aria-hidden="true"></i>
-        <p class="card-name">The Sound Design Lab</p>
-        <p class="card-desc">Interactive sound design laboratory.</p>
-        <span class="card-tag t-audio">audio</span>
       </a>
       <a class="card" href="https://audiohospital.github.io/OASIS-ROUTE/#/start" target="_blank">
         <span class="led"></span><span class="port"></span>
@@ -488,6 +486,13 @@ body{
   <div class="grid-wrap">
     <svg class="connector-layer" id="connWeb"></svg>
     <div class="cards" id="gridWeb">
+      <a class="card" href="https://pixelprotech-za.github.io/Technician-Sign-In/" target="_blank">
+        <span class="led"></span><span class="port"></span>
+        <i class="ti ti-user-check card-ico ico-tl" aria-hidden="true"></i>
+        <p class="card-name">Technician Sign-In</p>
+        <p class="card-desc">Secure technician authentication system.</p>
+        <span class="card-tag t-web"><i class="ti ti-world" aria-hidden="true"></i> web</span>
+      </a>
       <a class="card" href="https://pixelprotech-za.github.io/PixelFix-Pro-ZA/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-tools card-ico ico-pp" aria-hidden="true"></i>
@@ -526,7 +531,6 @@ body{
       <a class="card" href="https://pixelprotech-za.github.io/Bulk-Email-Sender/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-mail-forward card-ico ico-gd" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">Bulk Email Sender</p>
         <p class="card-desc">Mass outreach &amp; campaign delivery.</p>
         <span class="card-tag t-web"><i class="ti ti-world" aria-hidden="true"></i> web</span>
@@ -586,7 +590,6 @@ body{
       <a class="card" href="https://pixelprotech-za.github.io/Technician-OS/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-device-desktop-cog card-ico ico-tl" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">Technician OS</p>
         <p class="card-desc">Tech operations system.</p>
         <span class="card-tag t-app">app</span>
@@ -594,7 +597,6 @@ body{
       <a class="card" href="https://pixelprotech-za.github.io/Mobile-Academy-Pro/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-device-mobile card-ico ico-pp" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">Mobile Academy Pro</p>
         <p class="card-desc">Mobile learning platform.</p>
         <span class="card-tag t-app">app</span>
@@ -602,7 +604,6 @@ body{
       <a class="card" href="https://pixelprotech-za.github.io/PixelPro-Free-TV/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-device-tv card-ico ico-gd" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">PixelPro Free TV</p>
         <p class="card-desc">Free streaming platform.</p>
         <span class="card-tag t-app">app</span>
@@ -610,7 +611,6 @@ body{
       <a class="card" href="https://pixelprotech-za.github.io/PixelView-Pro/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-photo card-ico ico-tl" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">PixelView Pro</p>
         <p class="card-desc">Image viewer — desktop app.</p>
         <span class="card-tag t-app">app</span>
@@ -618,15 +618,13 @@ body{
       <a class="card" href="https://pixelprotech-za.github.io/-PIXEL-SIGNAL-POINT-IT-LOCK-IT-UNDERSTAND-IT/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-target-arrow card-ico ico-pp" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">Pixel Signal</p>
-        <p class="card-desc">Point it. Lock it. Understand it.</p>
+        <p class="card-desc">Aim at a signal source to lock on and decode what it's transmitting.</p>
         <span class="card-tag t-app">app</span>
       </a>
       <a class="card" href="https://pixelprotech-za.github.io/PIXEL-WiFi/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-wifi card-ico ico-tl" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">Pixel WiFi</p>
         <p class="card-desc">Network scanning &amp; connectivity tool.</p>
         <span class="card-tag t-app">app</span>
@@ -649,6 +647,20 @@ body{
   <div class="grid-wrap">
     <svg class="connector-layer" id="connAudio"></svg>
     <div class="cards" id="gridAudio">
+      <a class="card" href="https://audiohospital.github.io/Certified-Engine/" target="_blank">
+        <span class="led"></span><span class="port"></span>
+        <i class="ti ti-certificate card-ico ico-gd" aria-hidden="true"></i>
+        <p class="card-name">Certified Engine</p>
+        <p class="card-desc">Certification platform for engineers &amp; technicians.</p>
+        <span class="card-tag t-audio">audio</span>
+      </a>
+      <a class="card" href="https://audiohospital.github.io/The-Sound-Design-Lab/#home" target="_blank">
+        <span class="led"></span><span class="port"></span>
+        <i class="ti ti-waveform card-ico ico-gd" aria-hidden="true"></i>
+        <p class="card-name">The Sound Design Lab</p>
+        <p class="card-desc">Interactive sound design laboratory.</p>
+        <span class="card-tag t-audio">audio</span>
+      </a>
       <a class="card" href="https://audiohospital.github.io/Frequency-Rooms/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-door card-ico ico-gd" aria-hidden="true"></i>
@@ -752,7 +764,6 @@ body{
       <a class="card" href="https://audiohospital.github.io/Audio-Hospital-Organic-Sound-Treatment-Facility/" target="_blank">
         <span class="led"></span><span class="port"></span>
         <i class="ti ti-leaf card-ico ico-gd" aria-hidden="true"></i>
-        <div class="new-badge">NEW</div>
         <p class="card-name">Organic Sound Treatment Facility</p>
         <p class="card-desc">Natural, organic-toned audio treatment &amp; healing space.</p>
         <span class="card-tag t-audio">audio</span>
