@@ -239,7 +239,6 @@ body{
       </div>
     </div>
     <div class="hdr-mods">
-      <div class="hmod"><span class="lv"></span>SYSTEM STATUS <b>ONLINE</b></div>
       <div class="hmod"><i class="ti ti-clock-hour-4"></i>&nbsp;<b id="utcClock">--:--:--</b>&nbsp;UTC</div>
       <div class="hmod"><i class="ti ti-certificate"></i>&nbsp;REG <b>2026/622131/07</b></div>
       <div class="hmod"><i class="ti ti-award"></i>&nbsp;B-BBEE <b>LEVEL 1</b></div>
@@ -374,20 +373,20 @@ body{
         </div>
       </div>
       <div class="panel">
-        <div class="panel-label"><span class="dot"></span>SYSTEM STATUS</div>
-        <div class="stat-row"><span>CPU LOAD</span><div class="bar-track"><div class="bar-fill" id="barCpu" style="width:23%"></div></div><span id="valCpu">23%</span></div>
-        <div class="stat-row"><span>MEMORY</span><div class="bar-track"><div class="bar-fill" id="barMem" style="width:48%"></div></div><span id="valMem">48%</span></div>
+        <div class="panel-label"><span class="dot"></span>BUILD LEDGER</div>
+        <div class="stat-row"><span>COMPANIES</span><span style="font-family:var(--mono); color:var(--tl); font-weight:500">03</span></div>
+        <div class="stat-row"><span>REPOSITORIES</span><span style="font-family:var(--mono); color:var(--tl); font-weight:500" id="repoCount">43</span></div>
         <div class="stat-mini">
-          <span>UPTIME <b id="uptimeVal">15D 6H 42M</b></span>
-          <span>NETWORK <b>SECURE</b></span>
+          <span>FOUNDED <b>04 AUG 2026</b></span>
+          <span>ORIGIN <b>GAUTENG, ZA</b></span>
         </div>
       </div>
     </div>
 
     <!-- CENTER SPACER (eye lives above, this column stays open on desktop) -->
     <div style="display:flex; align-items:center; justify-content:center; min-height:60px">
-      <div class="hmod" style="font-family:var(--mono)">
-        <span class="lv"></span>ALL SYSTEMS OPERATIONAL
+      <div class="hmod" style="font-family:var(--mono)" id="connBadge">
+        <span class="lv"></span>VERIFYING CONNECTION…
       </div>
     </div>
 
@@ -398,12 +397,12 @@ body{
         <div class="console-log" id="consoleLog"></div>
       </div>
       <div class="panel">
-        <div class="panel-label"><span class="dot"></span>ACTIVE PROTOCOLS</div>
+        <div class="panel-label"><span class="dot"></span>BY THE NUMBERS</div>
         <div class="protocols">
-          <div class="hexwrap"><div class="hex"><i class="ti ti-lock"></i></div><span class="hex-label">SECURE</span></div>
-          <div class="hexwrap"><div class="hex"><i class="ti ti-refresh"></i></div><span class="hex-label">SYNCED</span></div>
-          <div class="hexwrap"><div class="hex"><i class="ti ti-cloud-check"></i></div><span class="hex-label">BACKED UP</span></div>
-          <div class="hexwrap"><div class="hex"><i class="ti ti-shield-check"></i></div><span class="hex-label">PROTECTED</span></div>
+          <div class="hexwrap"><div class="hex" style="font-size:15px">03</div><span class="hex-label">ENTITIES</span></div>
+          <div class="hexwrap"><div class="hex" style="font-size:15px">43</div><span class="hex-label">REPOS</span></div>
+          <div class="hexwrap"><div class="hex"><i class="ti ti-map-pin"></i></div><span class="hex-label">GAUTENG</span></div>
+          <div class="hexwrap"><div class="hex"><i class="ti ti-calendar"></i></div><span class="hex-label">EST 2026</span></div>
         </div>
       </div>
     </div>
@@ -998,7 +997,7 @@ body{
 
   <!-- FOOTER -->
   <footer class="ftr">
-    <span class="enc"><span class="dot"></span>ENCRYPTED CONNECTION</span>
+    <span class="enc"><span class="dot"></span><span id="connFooter">CHECKING CONNECTION…</span></span>
     <span>© 2026 PIXELPROTECH SOLUTIONS (PTY) LTD · REG 2026/622131/07 · BUILT WITH PURPOSE, ENGINEERED IN SOUTH AFRICA</span>
     <span>COMMAND CENTRE v4.2.0 · THE WATCHER</span>
   </footer>
@@ -1152,7 +1151,7 @@ body{
   const lines = [
     "Initiating Command Centre...",
     "Loading modules... [ OK ]",
-    "Establishing secure connection... [ OK ]",
+    "Indexing repositories... [ OK ]",
     "Welcome back, Rojas.",
     "Let's build the future."
   ];
@@ -1173,26 +1172,19 @@ body{
   typeLine();
 })();
 
-/* ================= SYSTEM STATUS LIVE FLICKER ================= */
+/* ================= REAL CONNECTION CHECK (no fake telemetry) ================= */
 (function(){
-  const cpu = document.getElementById('barCpu'), cpuV = document.getElementById('valCpu');
-  const mem = document.getElementById('barMem'), memV = document.getElementById('valMem');
-  setInterval(()=>{
-    const c = Math.round(18 + Math.random()*14);
-    const m = Math.round(42 + Math.random()*12);
-    cpu.style.width = c+'%'; cpuV.textContent = c+'%';
-    mem.style.width = m+'%'; memV.textContent = m+'%';
-  }, 2400);
-
-  const startUptime = Date.now() - (15*86400 + 6*3600 + 42*60)*1000;
-  const up = document.getElementById('uptimeVal');
-  setInterval(()=>{
-    const diff = Date.now()-startUptime;
-    const d = Math.floor(diff/86400000);
-    const h = Math.floor((diff%86400000)/3600000);
-    const m = Math.floor((diff%3600000)/60000);
-    up.textContent = `${d}D ${h}H ${m}M`;
-  }, 30000);
+  const secure = window.isSecureContext === true || location.protocol === 'https:' || location.hostname === 'localhost';
+  const connBadge = document.getElementById('connBadge');
+  const connFooter = document.getElementById('connFooter');
+  if(connBadge){
+    connBadge.innerHTML = secure
+      ? '<span class="lv"></span>CONNECTION ENCRYPTED (HTTPS)'
+      : '<span class="lv" style="background:var(--rd)"></span>CONNECTION NOT ENCRYPTED';
+  }
+  if(connFooter){
+    connFooter.textContent = secure ? 'ENCRYPTED CONNECTION (HTTPS)' : 'UNENCRYPTED CONNECTION';
+  }
 })();
 
 /* ================= CARD CONNECTOR LINES (hub-spoke, native SVG animateMotion) ================= */
