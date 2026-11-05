@@ -1,0 +1,29 @@
+# Daily dead-link check for the Command Centre.
+# Fails (and GitHub emails the repo owner) when any card points to a 404/410 page.
+# Install: in the Command Centre repo on github.com -> Add file -> Create new file,
+# type the name  .github/workflows/link-check.yml  (typing the slashes makes the folders), paste this, commit.
+name: link-check
+
+on:
+  schedule:
+    - cron: '0 4 * * *'      # 04:00 UTC = 06:00 South Africa, before clients wake up
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check every github.io link in index.html
+        run: python check_links.py index.html
+      - name: Keep the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-report
+          path: link-report.txt

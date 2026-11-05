@@ -1404,6 +1404,77 @@ body{
   let rzT;
   window.addEventListener('resize', ()=>{ clearTimeout(rzT); rzT=setTimeout(buildAll,200); });
 })();
+
+/* ================= LINK GUARD — hides any card whose page is gone (404/410) =================
+   Real checks only: HEAD request to each github.io page (GitHub Pages sends CORS headers, so the
+   status is readable). Network failure / timeout / 5xx = card stays (we never hide on doubt).
+   Results cached 6h per browser so repeat visits cost nothing. */
+(function(){
+  const KEY='ppt_linkguard_v1', TTL=6*3600*1000, POOL=6, TIMEOUT=10000;
+  let cache={}; try{ cache=JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ cache={}; }
+  const cards=[...document.querySelectorAll('a.card[href^="https://"]')].filter(a=>/\.github\.io\//.test(a.href));
+  if(!cards.length) return;
+  const stat={live:0, gone:0, unknown:0};
+  const isGone=s=>s===404||s===410;
+  const clean=a=>a.href.split('#')[0];
+
+  function hide(a){ a.hidden=true; a.style.display='none'; a.dataset.dead='1'; }
+
+  async function probe(u){
+    const ctl=new AbortController(); const to=setTimeout(()=>ctl.abort(),TIMEOUT);
+    try{
+      const r=await fetch(u,{method:'HEAD',cache:'no-store',signal:ctl.signal});
+      return r.status;
+    }catch(e){ return 0; }
+    finally{ clearTimeout(to); }
+  }
+
+  async function check(a){
+    const u=clean(a), c=cache[u], now=Date.now();
+    let s;
+    if(c && now-c.t<TTL){ s=c.s; }
+    else{
+      s=await probe(u);
+      if(s!==0 && s<500) cache[u]={s:s,t:Date.now()};   // never cache a network failure or server error
+    }
+    if(isGone(s)){ hide(a); stat.gone++; }
+    else if(s===0 || s>=500){ stat.unknown++; }
+    else{ stat.live++; }
+  }
+
+  async function run(){
+    const queue=cards.slice();
+    await Promise.all(Array.from({length:POOL}, async ()=>{
+      while(queue.length){ await check(queue.shift()); }
+    }));
+    try{ localStorage.setItem(KEY, JSON.stringify(cache)); }catch(e){}
+
+    // collapse sections that ended up empty
+    document.querySelectorAll('section').forEach(sec=>{
+      const all=sec.querySelectorAll('a.card');
+      if(all.length && [...all].every(a=>a.dataset.dead==='1')){
+        sec.style.display='none';
+      }
+    });
+
+    // honest status line in the footer (real numbers only)
+    const ftr=document.querySelector('.ftr');
+    if(ftr){
+      const t=new Date().toISOString().substr(11,5);
+      const el=document.createElement('span');
+      el.id='linkGuardStatus';
+      el.textContent = stat.unknown && !stat.live && !stat.gone
+        ? 'LINK CHECK UNAVAILABLE (OFFLINE?)'
+        : `LINKS CHECKED ${t} UTC · ${stat.live} LIVE · ${stat.gone} HIDDEN` + (stat.unknown?` · ${stat.unknown} UNVERIFIED`:'');
+      ftr.appendChild(el);
+    }
+    if(stat.gone){ console.warn('[link-guard] hidden dead cards:', cards.filter(a=>a.dataset.dead==='1').map(a=>a.href)); }
+    // redraw connector lines for the new card layout
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  if(document.readyState==='complete') run(); else window.addEventListener('load', run);
+})();
 </script>
 </body>
 </html>
