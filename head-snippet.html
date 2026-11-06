@@ -1,0 +1,42 @@
+<!-- 1) Paste inside <head> of index.html -->
+<link rel="manifest" href="/command-centre/manifest.webmanifest">
+<meta name="theme-color" content="#07070A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Command Centre">
+<link rel="icon" type="image/png" sizes="192x192" href="/command-centre/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/command-centre/icons/apple-touch-icon.png">
+
+<!-- 2) Paste just before </body> -->
+<button id="installBtn" hidden
+  style="position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:9999;
+         padding:12px 18px;border:1px solid #00e5a0;background:#07070A;color:#00e5a0;
+         font:700 13px/1 monospace;letter-spacing:.08em;border-radius:10px;cursor:pointer">
+  INSTALL APP
+</button>
+<script>
+(function () {
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker
+        .register('/command-centre/sw.js', { scope: '/command-centre/' })
+        .catch(function (e) { console.warn('SW registration failed', e); });
+    });
+  }
+
+  var deferred = null, btn = document.getElementById('installBtn');
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();            // stop the mini-infobar, use our button instead
+    deferred = e;
+    btn.hidden = false;
+  });
+  btn.addEventListener('click', async function () {
+    if (!deferred) return;
+    btn.hidden = true;
+    deferred.prompt();
+    await deferred.userChoice;
+    deferred = null;
+  });
+  window.addEventListener('appinstalled', function () { btn.hidden = true; deferred = null; });
+})();
+</script>
