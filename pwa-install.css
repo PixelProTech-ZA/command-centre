@@ -1,0 +1,26 @@
+/* Command Centre install button — uses the page's own tokens (--tl, --pp, --gd). */
+.pwa-btn{
+  font-family:var(--mono,'JetBrains Mono',monospace); font-size:9.5px; font-weight:700; letter-spacing:.16em;
+  color:var(--tl,#00D4AA); background:var(--tl-a,rgba(0,212,170,.14));
+  border:1px solid rgba(0,212,170,.45); border-radius:10px;
+  padding:9px 14px; min-height:40px; cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s;
+}
+.pwa-btn:hover,.pwa-btn:focus-visible{background:var(--pp,#7B2FFF); color:#fff; border-color:var(--pp,#7B2FFF); outline:none}
+.pwa-btn[hidden]{display:none}
+.pwa-floating{position:fixed; right:14px; bottom:14px; z-index:200}
+
+.pwa-panel{
+  position:fixed; left:50%; bottom:16px; transform:translateX(-50%); z-index:300;
+  width:min(92vw,420px); padding:18px 18px 14px; border-radius:14px;
+  background:rgba(11,11,17,.96); border:1px solid rgba(0,212,170,.5);
+  backdrop-filter:blur(16px); box-shadow:0 12px 44px rgba(0,0,0,.7); color:var(--tx,#F1EEFA);
+}
+.pwa-title{margin:0 0 10px; font-family:var(--disp,'Orbitron',sans-serif); font-size:11px; letter-spacing:.24em; color:var(--tl,#00D4AA)}
+.pwa-steps{margin:0 0 14px; padding-left:20px; font-family:var(--body,'Space Grotesk',sans-serif); font-size:13.5px; line-height:1.55; color:var(--tx2,#9A90B8)}
+.pwa-steps li+li{margin-top:6px}
+.pwa-close{
+  font-family:var(--mono,'JetBrains Mono',monospace); font-size:9.5px; font-weight:700; letter-spacing:.16em;
+  color:var(--gd,#D8B96A); background:transparent; border:1px solid rgba(216,185,106,.5); border-radius:8px;
+  padding:9px 14px; min-height:40px; cursor:pointer;
+}
